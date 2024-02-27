@@ -14,6 +14,7 @@ def checkout(skus):
     deals = {"A": [(5,200), (3, 130)], "B": [(2, 45)], "H":[(10,80),(5,45)], "K":[(2,150)], "P":[(5,200)], "Q":[(3,80)], "V": [(3,130), (2,90)]} # lists must be sorted in decreasing sku count 
     specials = {"E": {"B": (2,1)}, "F":{"F": (2,1)}, "N":{"M":(3,1)},"R":{"Q":(3,1)}, "U":{"U":(3,1)}}
     group_bundle_price_ordered = {"ZSTYX":(3,45)} # IMPORTANT: the key in this dictionary is in sorted single price order, meaning the single price of Z >= S >= T...
+    bundle_sku_count = 0
     total_cost = 0
     goods_purchased = {}
   
@@ -21,13 +22,16 @@ def checkout(skus):
     for sku in skus:
         if sku not in prices: 
             return -1 
+        if sku in group_bundle_price_ordered.keys()[0]: # this would be a for loop, if numerous bundles 
+            bundle_sku_count += 1
         if sku not in goods_purchased: 
             goods_purchased[sku] = 1
         else: 
             goods_purchased[sku] +=1
 
     # apply group bundles 
-    
+
+
   
     # apply specials and BOGO deals first
     for sku in goods_purchased: 
@@ -72,3 +76,4 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
+
