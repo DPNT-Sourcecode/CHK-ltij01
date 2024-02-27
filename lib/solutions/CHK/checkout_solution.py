@@ -35,12 +35,12 @@ def checkout(skus):
         total_item_count = bundle_sku_count[bundle]
         deal_count, deal_price = group_bundle_price_ordered[bundle]
         while total_item_count >= deal_count: 
-            remaining_items = deal_count
             for sku in bundle: 
                 if goods_purchased[sku] >= remaining_items:
                     goods_purchased[sku] -= remaining_items 
                     total_cost += deal_price
                     total_item_count -= remaining_items
+                    remaining_items = deal_count
                     break 
                 elif goods_purchased[sku] < remaining_items and goods_purchased[sku] > 0 and total_item_count>=remaining_items: 
                     remaining_items -= goods_purchased[sku]
@@ -91,5 +91,6 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
+
 
 

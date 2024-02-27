@@ -2,7 +2,7 @@ import unittest
 
 def checkout(skus):
     prices = {"A": 50, "B": 30, "C":20, "D":15, "E":40, "F":10, "G": 20, "H": 10, "I": 35, "J": 60, "K":70, "L":90, "M":15, "N":40, "O":10, "P":50, "Q":30, "R":50, "S":20, "T":20,"U":40,"V":50, "W":20,"X":17, "Y":20, "Z":21}
-    deals = {"A": [(5,200), (3, 130)], "B": [(2, 45)], "H":[(10,80),(5,45)], "K":[(2,150)], "P":[(5,200)], "Q":[(3,80)], "V": [(3,130), (2,90)]} # lists must be sorted in decreasing sku count 
+    deals = {"A": [(5,200), (3, 130)], "B": [(2, 45)], "H":[(10,80),(5,45)], "K":[(2,120)], "P":[(5,200)], "Q":[(3,80)], "V": [(3,130), (2,90)]} # lists must be sorted in decreasing sku count 
     specials = {"E": {"B": (2,1)}, "F":{"F": (2,1)}, "N":{"M":(3,1)},"R":{"Q":(3,1)}, "U":{"U":(3,1)}}
     group_bundle_price_ordered = {"ZSTYX":(3,45)} # IMPORTANT: the key in this dictionary is in sorted single price order, meaning the single price of Z >= S >= T...
     bundle_sku_count = {"ZSTYX": 0}
@@ -25,13 +25,12 @@ def checkout(skus):
         total_item_count = bundle_sku_count[bundle]
         deal_count, deal_price = group_bundle_price_ordered[bundle]
         while total_item_count >= deal_count: 
-            print(total_item_count)
-            remaining_items = deal_count
             for sku in bundle: 
                 if goods_purchased[sku] >= remaining_items:
                     goods_purchased[sku] -= remaining_items 
                     total_cost += deal_price
                     total_item_count -= remaining_items
+                    remaining_items = deal_count
                     break 
                 elif goods_purchased[sku] < remaining_items and goods_purchased[sku] > 0 and total_item_count>=remaining_items: 
                     remaining_items -= goods_purchased[sku]
@@ -84,7 +83,6 @@ def find_next_compatible_deal(count, sku_deals):
     return -1 
 
 
-
 class TestCheckout(unittest.TestCase): 
     def test_checkout_singles(self): 
         skus = "ABC"
@@ -107,7 +105,11 @@ class TestCheckout(unittest.TestCase):
     def test_checkout_group_bundle(self): 
         skus = "AAAAAAAAAEEBFFFZZZXY"
         self.assertEqual(checkout(skus), 562)
+    def test_checkout_group_bundle_2(self):
+        skus = "STX"
+        self.assertEqual(checkout(skus), 45)
 
 
 if __name__ == '__main__':
     unittest.main()
+
