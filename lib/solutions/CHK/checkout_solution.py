@@ -72,8 +72,3 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
-
-
-
-
-
