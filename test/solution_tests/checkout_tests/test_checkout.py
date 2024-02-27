@@ -36,7 +36,7 @@ def checkout(skus):
                 elif goods_purchased[sku] < remaining_items and goods_purchased[sku] > 0 and total_item_count>=remaining_items: 
                     remaining_items -= goods_purchased[sku]
                     goods_purchased[sku] = 0
-                    total_item_count -= remaining_items
+                    total_item_count -= goods_purchased[sku]
                 
   
     # apply specials and BOGO deals 
@@ -120,5 +120,6 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
