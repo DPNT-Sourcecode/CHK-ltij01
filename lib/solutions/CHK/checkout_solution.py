@@ -20,7 +20,10 @@ def checkout(skus):
     for sku in goods_purchased: 
         count = goods_purchased[sku]
         if sku in deals: 
-
-        
+            deal_count, deal_price = deals[sku]
+            total_cost += (count//deal_count) * deal_price 
+            count = count % deal_count
+        total_cost += count * prices[sku]
     return total
+
 
