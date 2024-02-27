@@ -30,7 +30,7 @@ def checkout(skus):
             deal_count, deal_price = deals[sku][current_deal]
             while count >= deal_count: 
                 count -= deal_count
-                total_cost += goods_purchased
+                total_cost += deal_price
                 if count < deal_count and current_deal<len(deals[sku])-1:
                     current_deal +=1 
                     deal_count, deal_price = deals[sku][current_deal]
@@ -40,15 +40,11 @@ def checkout(skus):
 
 
 def find_next_compatible_deal(count, sku_deals): 
-    current_deal = 0
-    deal_count, deal_price = sku_deals[current_deal]
-    while deal_count > count: 
-        if current_deal<len(sku_deals)-1: 
-            current_deal +=1
-            deal_count, deal_price = sku_deals[current_deal]
-        else:
-            return -1
-    return current_deal
+    for i in range(len(sku_deals)):
+        deal_count, _ = sku_deals[i]
+        if deal_count <= count: 
+            return i 
+    return -1 
 
 
 class TestCheckout(unittest.TestCase): 
@@ -71,4 +67,5 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
 
