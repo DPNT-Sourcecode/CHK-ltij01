@@ -24,6 +24,7 @@ def checkout(skus):
             total_cost += (count//deal_count) * deal_price 
             count = count % deal_count
         total_cost += count * prices[sku]
-    return total
+    return total_cost
+
 
 
