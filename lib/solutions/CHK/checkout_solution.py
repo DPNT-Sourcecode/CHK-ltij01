@@ -7,14 +7,20 @@
 """
 def checkout(skus):
     prices = {"A": 50, "B": 30, "C":20, "D":15}
-    #deals = {"A": {3: 130}, "B": {2:45}}
-    deals =  {"3A": 130, "2B": 45}
-    total = 0
-    for token in skus.split():
-        if token in prices: 
-            total+= prices[token]  
-        elif token in deals:
-            total+=deals[token]
-        else:
-            return -1
+    deals = {"A": (3, 130), "B": (2, 45)}
+    total_cost = 0
+    goods_purchased = {}
+    for sku in skus:
+        if sku not in prices: 
+            return -1 
+        if sku not in goods_purchased: 
+            goods_purchased[sku] = 1
+        else: 
+            goods_purchased[sku] +=1
+    for sku in goods_purchased: 
+        count = goods_purchased[sku]
+        if sku in deals: 
+
+        
     return total
+
