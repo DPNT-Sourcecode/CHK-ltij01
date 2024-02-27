@@ -52,7 +52,7 @@ class TestCheckout(unittest.TestCase):
         skus = "ABC"
         self.assertEqual(checkout(skus), 100)
     def test_checkout_invalid(self):
-        skus = "DEF"
+        skus = "DEJ"
         self.assertEqual(checkout(skus), -1)
     def test_checkout_deals(self): 
         skus = "AAAAB"
@@ -63,8 +63,11 @@ class TestCheckout(unittest.TestCase):
     def test_checkout_specials_and_deals(self): 
         skus = "AAAAAAAAAEEB"
         self.assertEqual(checkout(skus), 460)
+    def test_checkout_bogo_special(self): 
+        skus = "AAAAAAAAAEEBFFF"
 
 
 if __name__ == '__main__':
     print(checkout("E"))
     unittest.main()
+

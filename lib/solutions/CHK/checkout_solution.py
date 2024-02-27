@@ -5,7 +5,7 @@
 @param skus: unicode string, non space separated letters, no numbers
 """
 def checkout(skus):
-    prices = {"A": 50, "B": 30, "C":20, "D":15, "E":40}
+    prices = {"A": 50, "B": 30, "C":20, "D":15, "E":40, "F":10}
     deals = {"A": [(5,200), (3, 130)], "B": [(2, 45)]}
     specials = {"E": {"B": (2,1)}}
     total_cost = 0
@@ -49,3 +49,4 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
+
