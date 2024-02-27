@@ -24,7 +24,8 @@ def checkout(skus):
     for bundle in group_bundle_price_ordered: 
         total_item_count = bundle_sku_count[bundle]
         deal_count, deal_price = group_bundle_price_ordered[bundle]
-        while total_item_count >= deal_count: 
+        remaining_items = deal_count
+        while total_item_count >= remaining_items: 
             for sku in bundle: 
                 if goods_purchased[sku] >= remaining_items:
                     goods_purchased[sku] -= remaining_items 
@@ -108,8 +109,16 @@ class TestCheckout(unittest.TestCase):
     def test_checkout_group_bundle_2(self):
         skus = "STX"
         self.assertEqual(checkout(skus), 45)
+    def test_checkout_group_bundle_3(self):
+        skus = "AAAAAPPPPPUUUUEEBRRRQAAAHHHHHHHHHHKKVVVBBNNNMFFFQQQVVHHHHHSTX"
+        self.assertEqual(checkout(skus), 1655)
+    def test_checkout_group_bundle_4(self):
+        skus = "CXYZYZC"
+        self.assertEqual(checkout(skus), 122)
+    
 
 
 if __name__ == '__main__':
     unittest.main()
+
 
