@@ -15,6 +15,8 @@ def checkout(skus):
     specials = {"E": {"B": (2,1)}, "F":{"F": (2,1)}}
     total_cost = 0
     goods_purchased = {}
+  
+    # build map of item to amount purchased
     for sku in skus:
         if sku not in prices: 
             return -1 
@@ -22,6 +24,8 @@ def checkout(skus):
             goods_purchased[sku] = 1
         else: 
             goods_purchased[sku] +=1
+  
+  
     for sku in goods_purchased: 
         count = goods_purchased[sku]
         if sku in specials: 
@@ -35,7 +39,10 @@ def checkout(skus):
                     # special BOGO style deal
                     else: 
                         sku_count, freebie_count = specials[sku][freebie_sbu]
-
+                        if count >= sku_count + freebie_count: 
+                            times_applied = count // (sku_count + freebie_count) 
+                            total_cost += times_applied * sku_count * prices[sku]
+                            goods_purchased[sku] -= times_applied * (sku_count + freebie_count) 
 
     for sku in goods_purchased: 
         count = goods_purchased[sku]
@@ -61,6 +68,7 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
+
 
 
 
