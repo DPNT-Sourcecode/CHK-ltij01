@@ -6,7 +6,8 @@
 """
 def checkout(skus):
     prices = {"A": 50, "B": 30, "C":20, "D":15}
-    deals = {"A": (3, 130), "B": (2, 45)}
+    deals = {"A": [(5,200), (3, 130)], "B": (2, 45)}
+    specials = {"E": {"B": (2,1)}}
     total_cost = 0
     goods_purchased = {}
     for sku in skus:
@@ -24,6 +25,7 @@ def checkout(skus):
             count = count % deal_count
         total_cost += count * prices[sku]
     return total_cost
+
 
 
 
