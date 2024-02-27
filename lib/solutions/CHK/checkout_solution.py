@@ -1,5 +1,4 @@
 
-
 # noinspection PyUnusedLocal
 # skus = unicode string
 """
@@ -25,6 +24,7 @@ def checkout(skus):
             count = count % deal_count
         total_cost += count * prices[sku]
     return total_cost
+
 
 
 
