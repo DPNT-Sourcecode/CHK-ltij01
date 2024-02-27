@@ -1,9 +1,9 @@
 import unittest
 
 def checkout(skus):
-    prices = {"A": 50, "B": 30, "C":20, "D":15, "E":40, "F":10}
-    deals = {"A": [(5,200), (3, 130)], "B": [(2, 45)]}
-    specials = {"E": {"B": (2,1)}, "F":{"F": (2,1)}}
+    prices = {"A": 50, "B": 30, "C":20, "D":15, "E":40, "F":10, "G": 20, "H": 10, "I": 35, "J": 60, "K":80, "L":90, "M":15, "N":40, "O":10, "P":50, "Q":30, "R":50, "S":30, "T":20,"U":40,"V":50, "W":20,"X":90, "Y":10, "Z":50}
+    deals = {"A": [(5,200), (3, 130)], "B": [(2, 45)], "H":[(10,80),(5,45)], "K":[(2,150)], "P":[(5,200)], "Q":[(3,80)], "V": [(3,130), (2,90)]} # lists must be sorted in decreasing sku count 
+    specials = {"E": {"B": (2,1)}, "F":{"F": (2,1)}, "N":{"M":(3,1)},"R":{"Q":(3,1)}, "U":{"U":(3,1)}}
     total_cost = 0
     goods_purchased = {}
   
@@ -60,13 +60,12 @@ def find_next_compatible_deal(count, sku_deals):
             return i 
     return -1 
 
-
 class TestCheckout(unittest.TestCase): 
     def test_checkout_singles(self): 
         skus = "ABC"
         self.assertEqual(checkout(skus), 100)
     def test_checkout_invalid(self):
-        skus = "DEJ"
+        skus = "DE!"
         self.assertEqual(checkout(skus), -1)
     def test_checkout_deals(self): 
         skus = "AAAAB"
@@ -85,3 +84,4 @@ class TestCheckout(unittest.TestCase):
 if __name__ == '__main__':
     print(checkout("E"))
     unittest.main()
+
