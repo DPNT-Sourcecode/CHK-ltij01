@@ -7,7 +7,7 @@ def checkout(skus):
     group_bundle_price_ordered = {"ZSTYX":(3,45)} # IMPORTANT: the key in this dictionary is in sorted single price order, meaning the single price of Z >= S >= T...
     bundle_sku_count = {"ZSTYX": 0}
     total_cost = 0
-    goods_purchased = {}
+    goods_purchased = {sku:0 for sku in prices}
   
     # build map of item to amount purchased
     for sku in skus:
@@ -21,6 +21,7 @@ def checkout(skus):
             goods_purchased[sku] +=1
 
     # apply group bundles first
+    print(bundle_sku_count[bundle])
     for bundle in group_bundle_price_ordered: 
         total_item_count = bundle_sku_count[bundle]
         deal_count, deal_price = group_bundle_price_ordered[bundle]
@@ -111,11 +112,12 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout(skus), 480)
     def test_checkout_group_bundle(self): 
         skus = "AAAAAAAAAEEBFFFZZZXY"
-        self.assertEqual(checkout(skus), 562 )
+        self.assertEqual(checkout(skus), )
 
 
 if __name__ == '__main__':
     print(checkout("E"))
     unittest.main()
+
 
 
