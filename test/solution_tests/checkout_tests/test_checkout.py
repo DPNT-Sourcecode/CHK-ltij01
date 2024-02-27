@@ -28,6 +28,7 @@ def checkout(skus):
         count = goods_purchased[sku]
         if sku in deals: 
             current_deal = 0 
+            print(deals[sku][current_deal])
             deal_count, deal_price = deals[sku][current_deal]
             while count >= deal_count: 
                 count -= deal_count
@@ -40,25 +41,26 @@ def checkout(skus):
     return total_cost
 
 class TestCheckout(unittest.TestCase): 
-    def test_checkout_singles(): 
+    def test_checkout_singles(self): 
         skus = "ABC"
-        assert checkout(skus) == 100
-    def test_checkout_invalid():
+        self.assertEqual(checkout(skus), 100)
+    def test_checkout_invalid(self):
         skus = "DEF"
-        assert checkout(skus) == -1
-    def test_checkout_deals(): 
+        self.assertEqual(checkout(skus), -1)
+    def test_checkout_deals(self): 
         skus = "AAAAB"
-        assert checkout(skus) == 210
-    def test_checkout_specials():
+        self.assertEqual(checkout(skus), 210)
+    def test_checkout_specials(self):
         skus = "EEB"
-        assert checkout(skus) == 80
-    def test_checkout_specials_and_deals(): 
+        self.assertEqual(checkout(skus), 80)
+    def test_checkout_specials_and_deals(self): 
         skus = "AAAAAAAAAEEB"
-        assert checkout(skus) == 460
+        self.assertEqual(checkout(skus), 460)
 
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
 
