@@ -3,11 +3,16 @@
 # skus = unicode string
 """
 @param skus: unicode string, non space separated letters, no numbers
+
+We perform operations in the following order:
+1. Apply all specials and BOGO style deals first
+2. Apply bundle deals
+3. Evaluate single item purchase prices
 """
 def checkout(skus):
     prices = {"A": 50, "B": 30, "C":20, "D":15, "E":40, "F":10}
     deals = {"A": [(5,200), (3, 130)], "B": [(2, 45)]}
-    specials = {"E": {"B": (2,1)}}
+    specials = {"E": {"B": (2,1)}, "F":{"F": (2,1)}}
     total_cost = 0
     goods_purchased = {}
     for sku in skus:
@@ -22,9 +27,15 @@ def checkout(skus):
         if sku in specials: 
             for freebie_sbu in specials[sku]: 
                 if freebie_sbu in goods_purchased:
-                    sku_count, freebie_count = specials[sku][freebie_sbu]
-                    goods_purchased[freebie_sbu] -= (count // sku_count) * freebie_count
-                    if goods_purchased[freebie_sbu] < 0: goods_purchased[freebie_sbu] = 0
+                    # special gives you another item for free
+                    if freebie_sbu != sbu: 
+                        sku_count, freebie_count = specials[sku][freebie_sbu]
+                        goods_purchased[freebie_sbu] -= (count // sku_count) * freebie_count
+                        if goods_purchased[freebie_sbu] < 0: goods_purchased[freebie_sbu] = 0
+                    # special BOGO style deal
+                    else: 
+                        sku_count, freebie_count = specials[sku][freebie_sbu]
+
 
     for sku in goods_purchased: 
         count = goods_purchased[sku]
@@ -49,4 +60,5 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
+
 
