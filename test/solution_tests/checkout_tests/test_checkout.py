@@ -28,7 +28,7 @@ def checkout(skus):
             print(total_item_count)
             remaining_items = deal_count
             for sku in bundle: 
-                if goods_purchased[sku] > remaining_items:
+                if goods_purchased[sku] >= remaining_items:
                     goods_purchased[sku] -= remaining_items 
                     total_cost += deal_price
                     total_item_count -= remaining_items
@@ -85,13 +85,6 @@ def find_next_compatible_deal(count, sku_deals):
 
 
 
-def find_next_compatible_deal(count, sku_deals): 
-    for i in range(len(sku_deals)):
-        deal_count, _ = sku_deals[i]
-        if deal_count <= count: 
-            return i 
-    return -1 
-
 class TestCheckout(unittest.TestCase): 
     def test_checkout_singles(self): 
         skus = "ABC"
@@ -118,8 +111,3 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
-
-

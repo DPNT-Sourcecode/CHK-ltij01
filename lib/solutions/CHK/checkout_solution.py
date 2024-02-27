@@ -5,9 +5,10 @@
 @param skus: unicode string, non space separated letters, no numbers
 
 We perform operations in the following order:
-1. Apply all specials and BOGO style deals first
-2. Apply bundle deals
-3. Evaluate single item purchase prices
+1. Apply all group bundles
+2. Apply all specials and BOGO style deals first
+3. Apply bundle deals
+4. Evaluate single item purchase prices
 """
 def checkout(skus):
     prices = {"A": 50, "B": 30, "C":20, "D":15, "E":40, "F":10, "G": 20, "H": 10, "I": 35, "J": 60, "K":70, "L":90, "M":15, "N":40, "O":10, "P":50, "Q":30, "R":50, "S":20, "T":20,"U":40,"V":50, "W":20,"X":17, "Y":20, "Z":21}
@@ -16,7 +17,7 @@ def checkout(skus):
     group_bundle_price_ordered = {"ZSTYX":(3,45)} # IMPORTANT: the key in this dictionary is in sorted single price order, meaning the single price of Z >= S >= T...
     bundle_sku_count = {"ZSTYX": 0}
     total_cost = 0
-    goods_purchased = {}
+    goods_purchased = {sku:0 for sku in prices}
   
     # build map of item to amount purchased
     for sku in skus:
@@ -36,15 +37,16 @@ def checkout(skus):
         while total_item_count >= deal_count: 
             remaining_items = deal_count
             for sku in bundle: 
-                if goods_purchased[sku] > remaining_items:
+                if goods_purchased[sku] >= remaining_items:
                     goods_purchased[sku] -= remaining_items 
                     total_cost += deal_price
                     total_item_count -= remaining_items
                     break 
-                elif goods_purchased[sku] < remaining_items and goods_purchased[sku] > 0: 
+                elif goods_purchased[sku] < remaining_items and goods_purchased[sku] > 0 and total_item_count>=remaining_items: 
                     remaining_items -= goods_purchased[sku]
                     goods_purchased[sku] = 0
                     total_item_count -= remaining_items
+                
   
     # apply specials and BOGO deals 
     for sku in goods_purchased: 
@@ -89,7 +91,4 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
-
-
-
 
