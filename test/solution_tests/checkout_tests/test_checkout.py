@@ -5,7 +5,7 @@ import unittest
 """
 def checkout(skus):
     prices = {"A": 50, "B": 30, "C":20, "D":15, "E":40}
-    deals = {"A": [(5,200), (3, 130)], "B": (2, 45)}
+    deals = {"A": [(5,200), (3, 130)], "B": [(2, 45)]}
     specials = {"E": {"B": (2,1)}}
     total_cost = 0
     goods_purchased = {}
@@ -32,8 +32,8 @@ def checkout(skus):
             deal_count, deal_price = deals[sku][current_deal]
             while count >= deal_count: 
                 count -= deal_count
-                total_cost += goods_purchased
-                if count < deal_count:
+                total_cost += deal_price
+                if count < deal_count and current_deal<len(deals[sku]):
                     current_deal +=1 
                     deal_count, deal_price = deals[sku][current_deal]
 
@@ -60,6 +60,7 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
 
