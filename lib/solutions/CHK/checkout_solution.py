@@ -19,14 +19,23 @@ def checkout(skus):
             goods_purchased[sku] +=1
     for sku in goods_purchased: 
         count = goods_purchased[sku]
+        if sku in specials: 
+            for freebie_sbu in specials[sku]: 
+                sku_count, freebie_count = specials[sku][freebie_sbu]
+                goods_purchased[freebie_sbu] -= (count // sku_count) * freebie_count
+                if goods_purchased[freebie_sbu] < 0: goods_purchased[freebie_sbu] = 0
+
+    for sku in goods_purchased: 
+        count = goods_purchased[sku]
         if sku in deals: 
-            deal_count, deal_price = deals[sku]
-            total_cost += (count//deal_count) * deal_price 
-            count = count % deal_count
+            current_deal = 0 
+            deal_count, deal_price = deals[sku][current_deal]
+            while count >= deal_count: 
+                count -= deal_count
+                total_cost += goods_purchased
+                if count < deal_count:
+                    current_deal +=1 
+                    deal_count, deal_price = deals[sku][current_deal]
+
         total_cost += count * prices[sku]
     return total_cost
-
-
-
-
-
