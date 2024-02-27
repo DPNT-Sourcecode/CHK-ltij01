@@ -1,6 +1,7 @@
 from solutions.CHK import checkout
+import unnittest
 
-class TestCheckout(): 
+class TestCheckout(unittest.TestCase): 
     def test_checkout_singles(): 
         skus = "ABC"
         assert checkout(skus) == 100
@@ -15,4 +16,10 @@ class TestCheckout():
         assert checkout(skus) == 80
     def test_checkout_specials_and_deals(): 
         skus = "AAAAAAAAAEEB"
+        assert checkout(skus) == 460
+
+
+if __name__ == '__main__':
+    unittest.main()
+
 
