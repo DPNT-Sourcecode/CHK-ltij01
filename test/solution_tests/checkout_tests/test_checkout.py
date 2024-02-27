@@ -21,7 +21,6 @@ def checkout(skus):
             goods_purchased[sku] +=1
 
     # apply group bundles first
-    print(bundle_sku_count[bundle])
     for bundle in group_bundle_price_ordered: 
         total_item_count = bundle_sku_count[bundle]
         deal_count, deal_price = group_bundle_price_ordered[bundle]
@@ -33,10 +32,11 @@ def checkout(skus):
                     total_cost += deal_price
                     total_item_count -= remaining_items
                     break 
-                elif goods_purchased[sku] < remaining_items and goods_purchased[sku] > 0: 
+                elif goods_purchased[sku] < remaining_items and goods_purchased[sku] > 0 and total_item_count>=remaining_items: 
                     remaining_items -= goods_purchased[sku]
                     goods_purchased[sku] = 0
                     total_item_count -= remaining_items
+                
   
     # apply specials and BOGO deals 
     for sku in goods_purchased: 
@@ -112,12 +112,13 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout(skus), 480)
     def test_checkout_group_bundle(self): 
         skus = "AAAAAAAAAEEBFFFZZZXY"
-        self.assertEqual(checkout(skus), )
+        self.assertEqual(checkout(skus), 562)
 
 
 if __name__ == '__main__':
     print(checkout("E"))
     unittest.main()
+
 
 
 
