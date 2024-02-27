@@ -25,7 +25,7 @@ def checkout(skus):
         total_item_count = bundle_sku_count[bundle]
         deal_count, deal_price = group_bundle_price_ordered[bundle]
         remaining_items = deal_count
-        while total_item_count >= remaining_items: 
+        while total_item_count >= deal_count: 
             for sku in bundle: 
                 if goods_purchased[sku] >= remaining_items:
                     goods_purchased[sku] -= remaining_items 
@@ -35,8 +35,8 @@ def checkout(skus):
                     break 
                 elif goods_purchased[sku] < remaining_items and goods_purchased[sku] > 0 and total_item_count>=remaining_items: 
                     remaining_items -= goods_purchased[sku]
-                    goods_purchased[sku] = 0
                     total_item_count -= goods_purchased[sku]
+                    goods_purchased[sku] = 0
                 
   
     # apply specials and BOGO deals 
@@ -120,6 +120,7 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
 
