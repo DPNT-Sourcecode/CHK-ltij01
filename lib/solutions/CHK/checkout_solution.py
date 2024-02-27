@@ -25,14 +25,14 @@ def checkout(skus):
         else: 
             goods_purchased[sku] +=1
   
-  
+    # apply specials and BOGO deals first
     for sku in goods_purchased: 
         count = goods_purchased[sku]
         if sku in specials: 
             for freebie_sbu in specials[sku]: 
                 if freebie_sbu in goods_purchased:
                     # special gives you another item for free
-                    if freebie_sbu != sbu: 
+                    if freebie_sbu != sku: 
                         sku_count, freebie_count = specials[sku][freebie_sbu]
                         goods_purchased[freebie_sbu] -= (count // sku_count) * freebie_count
                         if goods_purchased[freebie_sbu] < 0: goods_purchased[freebie_sbu] = 0
@@ -44,9 +44,9 @@ def checkout(skus):
                             total_cost += times_applied * sku_count * prices[sku]
                             goods_purchased[sku] -= times_applied * (sku_count + freebie_count) 
 
+    # apply possible deals with current count of item
     for sku in goods_purchased: 
         count = goods_purchased[sku]
-        # apply possible deals with current count of item
         if sku in deals: 
             current_deal = find_next_compatible_deal(count, deals[sku])
             if current_deal != -1: 
@@ -68,6 +68,7 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
+
 
 
 
