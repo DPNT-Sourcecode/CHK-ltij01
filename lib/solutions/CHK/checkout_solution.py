@@ -29,13 +29,24 @@ def checkout(skus):
         else: 
             goods_purchased[sku] +=1
 
-    # apply group bundles 
+    # apply group bundles first
     for bundle in group_bundle_price_ordered: 
-
-
-
+        total_item_count = bundle_sku_count[bundle]
+        deal_count, deal_price = group_bundle_price_ordered[bundle]
+        while total_item_count >= deal_count: 
+            remaining_items = deal_count
+            for sku in bundle: 
+                if goods_purchased[sku] > remaining_items:
+                    goods_purchased[sku] -= remaining_items 
+                    total_cost += deal_price
+                    total_item_count -= remaining_items
+                    break 
+                elif goods_purchased[sku] < remaining_items and goods_purchased[sku] > 0: 
+                    remaining_items -= goods_purchased[sku]
+                    goods_purchased[sku] = 0
+                    total_item_count -= remaining_items
   
-    # apply specials and BOGO deals first
+    # apply specials and BOGO deals 
     for sku in goods_purchased: 
         count = goods_purchased[sku]
         if sku in specials: 
@@ -78,5 +89,6 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
+
 
 
