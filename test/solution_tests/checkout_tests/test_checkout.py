@@ -33,7 +33,7 @@ def checkout(skus):
             while count >= deal_count: 
                 count -= deal_count
                 total_cost += deal_price
-                if count < deal_count and current_deal<len(deals[sku]):
+                if count < deal_count and current_deal<len(deals[sku])-1:
                     current_deal +=1 
                     deal_count, deal_price = deals[sku][current_deal]
 
@@ -60,6 +60,7 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
 
