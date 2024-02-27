@@ -1,8 +1,5 @@
 import unittest
 
-"""
-@param skus: unicode string, non space separated letters, no numbers
-"""
 def checkout(skus):
     prices = {"A": 50, "B": 30, "C":20, "D":15, "E":40}
     deals = {"A": [(5,200), (3, 130)], "B": [(2, 45)]}
@@ -27,18 +24,32 @@ def checkout(skus):
     for sku in goods_purchased: 
         count = goods_purchased[sku]
         if sku in deals: 
-            current_deal = 0 
-            print(deals[sku][current_deal])
+            current_deal = find_next_compatible_deal(count, deals[sku])
+            if current_deal == -1: 
+                continue
             deal_count, deal_price = deals[sku][current_deal]
             while count >= deal_count: 
                 count -= deal_count
-                total_cost += deal_price
+                total_cost += goods_purchased
                 if count < deal_count and current_deal<len(deals[sku])-1:
                     current_deal +=1 
                     deal_count, deal_price = deals[sku][current_deal]
 
         total_cost += count * prices[sku]
     return total_cost
+
+
+def find_next_compatible_deal(count, sku_deals): 
+    current_deal = 0
+    deal_count, deal_price = sku_deals[current_deal]
+    while deal_count > count: 
+        if current_deal<len(sku_deals)-1: 
+            current_deal +=1
+            deal_count, deal_price = sku_deals[current_deal]
+        else:
+            return -1
+    return current_deal
+
 
 class TestCheckout(unittest.TestCase): 
     def test_checkout_singles(self): 
@@ -60,3 +71,4 @@ class TestCheckout(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
