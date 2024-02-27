@@ -13,7 +13,7 @@ def checkout(skus):
     for sku in skus:
         if sku not in prices: 
             return -1 
-        if sku in group_bundle_price_ordered.keys()[0]: # this would be a for loop, if numerous bundles 
+        if sku in "ZSTYX": # this would be a for loop, if numerous bundles 
             bundle_sku_count["ZSTYX"] +=1
         if sku not in goods_purchased: 
             goods_purchased[sku] = 1
@@ -109,9 +109,13 @@ class TestCheckout(unittest.TestCase):
     def test_checkout_bogo_special(self): 
         skus = "AAAAAAAAAEEBFFF"
         self.assertEqual(checkout(skus), 480)
+    def test_checkout_group_bundle(self): 
+        skus = "AAAAAAAAAEEBFFFZZZXY"
+        self.assertEqual(checkout(skus), 562 )
 
 
 if __name__ == '__main__':
     print(checkout("E"))
     unittest.main()
+
 

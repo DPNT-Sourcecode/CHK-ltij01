@@ -22,7 +22,7 @@ def checkout(skus):
     for sku in skus:
         if sku not in prices: 
             return -1 
-        if sku in group_bundle_price_ordered.keys()[0]: # this would be a for loop, if numerous bundles 
+        if sku in "ZSTYX": # this would be a for loop, if numerous bundles 
             bundle_sku_count["ZSTYX"] +=1
         if sku not in goods_purchased: 
             goods_purchased[sku] = 1
@@ -89,6 +89,7 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
+
 
 
 
