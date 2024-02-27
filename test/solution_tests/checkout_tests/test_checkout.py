@@ -17,9 +17,10 @@ def checkout(skus):
         count = goods_purchased[sku]
         if sku in specials: 
             for freebie_sbu in specials[sku]: 
-                sku_count, freebie_count = specials[sku][freebie_sbu]
-                goods_purchased[freebie_sbu] -= (count // sku_count) * freebie_count
-                if goods_purchased[freebie_sbu] < 0: goods_purchased[freebie_sbu] = 0
+                if freebie_sbu in goods_purchased:
+                    sku_count, freebie_count = specials[sku][freebie_sbu]
+                    goods_purchased[freebie_sbu] -= (count // sku_count) * freebie_count
+                    if goods_purchased[freebie_sbu] < 0: goods_purchased[freebie_sbu] = 0
 
     for sku in goods_purchased: 
         count = goods_purchased[sku]
@@ -65,7 +66,9 @@ class TestCheckout(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    print(checkout("E"))
     unittest.main()
+
 
 
 
