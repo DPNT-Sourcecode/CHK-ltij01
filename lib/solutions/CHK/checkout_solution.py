@@ -2,6 +2,9 @@
 
 # noinspection PyUnusedLocal
 # skus = unicode string
+"""
+@param skus: unicode string, non space separated letters, no numbers
+"""
 def checkout(skus):
     prices = {"A": 50, "B": 30, "C":20, "D":15}
     #deals = {"A": {3: 130}, "B": {2:45}}
@@ -15,6 +18,3 @@ def checkout(skus):
         else:
             return -1
     return total
-
-
-
