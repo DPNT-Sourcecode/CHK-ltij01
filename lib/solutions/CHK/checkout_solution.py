@@ -29,15 +29,14 @@ def checkout(skus):
         count = goods_purchased[sku]
         if sku in deals: 
             current_deal = find_next_compatible_deal(count, deals[sku])
-            if current_deal == -1: 
-                continue
-            deal_count, deal_price = deals[sku][current_deal]
-            while count >= deal_count: 
-                count -= deal_count
-                total_cost += deal_price
-                if count < deal_count and current_deal<len(deals[sku])-1:
-                    current_deal +=1 
-                    deal_count, deal_price = deals[sku][current_deal]
+            if current_deal != -1: 
+                deal_count, deal_price = deals[sku][current_deal]
+                while count >= deal_count: 
+                    count -= deal_count
+                    total_cost += deal_price
+                    if count < deal_count and current_deal<len(deals[sku])-1:
+                        current_deal +=1 
+                        deal_count, deal_price = deals[sku][current_deal]
 
         total_cost += count * prices[sku]
     return total_cost
@@ -49,4 +48,5 @@ def find_next_compatible_deal(count, sku_deals):
         if deal_count <= count: 
             return i 
     return -1 
+
 
