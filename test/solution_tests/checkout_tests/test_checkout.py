@@ -25,6 +25,7 @@ def checkout(skus):
         total_item_count = bundle_sku_count[bundle]
         deal_count, deal_price = group_bundle_price_ordered[bundle]
         while total_item_count >= deal_count: 
+            print(total_item_count)
             remaining_items = deal_count
             for sku in bundle: 
                 if goods_purchased[sku] > remaining_items:
@@ -116,8 +117,8 @@ class TestCheckout(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    print(checkout("E"))
     unittest.main()
+
 
 
 
